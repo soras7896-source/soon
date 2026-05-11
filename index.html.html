@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rookie 14 온보딩</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#e8e0f5;display:flex;justify-content:center;align-items:flex-start;min-height:100vh;padding:20px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
+.wrap{width:390px;background:#f0f0f5;border-radius:24px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.18);min-height:720px;position:relative;}
+.screen{display:none;flex-direction:column;min-height:720px;}
+.screen.active{display:flex;}
+#s-notify{background:#f0f0f5;padding:14px;}
+.sbar{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:#1a1a1a;padding:4px 0 10px;}
+.noti-hdr{font-size:11px;color:#888;margin-bottom:8px;}
+.kcard{background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,0.08);margin-bottom:10px;}
+.ktop{background:#FEE500;padding:12px 14px;display:flex;align-items:center;gap:10px;}
+.kicon{width:34px;height:34px;border-radius:8px;background:#3A1D1D;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.ksender{font-weight:700;font-size:13px;color:#1a1a1a;}
+.ktime{font-size:11px;color:#666;margin-left:auto;}
+.kbody{padding:14px;}
+.ktitle{font-weight:700;font-size:14px;color:#1a1a1a;margin-bottom:4px;}
+.ksub{font-size:12px;color:#555;line-height:1.5;}
+.kdiv{height:1px;background:#f0f0f0;margin:10px 0;}
+.kcl{display:flex;flex-direction:column;gap:7px;}
+.cli{display:flex;align-items:center;gap:8px;font-size:12px;color:#333;}
+.cico{width:18px;height:18px;border-radius:50%;background:#7B5EA7;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.kbtn{margin:0 14px 14px;background:#7B5EA7;color:white;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;width:calc(100% - 28px);cursor:pointer;transition:background 0.2s;}
+.kbtn:hover{background:#6a4d94;}
+.bq{background:white;border-radius:16px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,0.08);}
+.bqt{font-weight:700;font-size:15px;color:#1a1a1a;margin-bottom:4px;}
+.bqs{font-size:12px;color:#666;margin-bottom:14px;}
+.bqbtns{display:flex;gap:8px;}
+.bqb{flex:1;padding:13px;border-radius:10px;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:opacity 0.2s;}
+.bqb:hover{opacity:0.85;}
+.bqb.y{background:#7B5EA7;color:white;}
+.bqb.n{background:#f0f0f5;color:#666;}
+#s-no{background:white;}
+#s-mission{background:white;}
+.mhdr{background:#7B5EA7;padding:18px 18px 24px;color:white;}
+.mday{font-size:12px;opacity:0.8;}
+.mtitle{font-size:19px;font-weight:800;margin-top:2px;}
+.pbwrap{margin-top:14px;}
+.pblabel{display:flex;justify-content:space-between;font-size:11px;opacity:0.8;margin-bottom:5px;}
+.pbbg{background:rgba(255,255,255,0.25);border-radius:100px;height:7px;}
+.pbfill{background:white;border-radius:100px;height:7px;transition:width 0.3s ease;}
+.mlist{padding:14px;flex:1;}
+.mi{border:1.5px solid #e8e0f5;border-radius:13px;padding:13px 14px;margin-bottom:9px;cursor:pointer;transition:all 0.2s;background:white;}
+.mi:hover{border-color:#b39ddb;}
+.mi.done{border-color:#7B5EA7;background:#f9f6ff;}
+.mitop{display:flex;align-items:flex-start;gap:10px;}
+.micb{width:22px;height:22px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;margin-top:2px;}
+.mi.done .micb{background:#7B5EA7;border-color:#7B5EA7;}
+.miname{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:2px;}
+.mi.done .miname{color:#7B5EA7;}
+.mistars{font-size:11px;color:#f59e0b;margin-bottom:3px;}
+.mitip{font-size:11px;color:#888;line-height:1.4;}
+.msub{padding:14px;padding-bottom:20px;}
+.sbtn{width:100%;padding:15px;border-radius:13px;border:none;background:#7B5EA7;color:white;font-size:15px;font-weight:800;cursor:pointer;transition:background 0.2s;}
+.sbtn:hover:not(:disabled){background:#6a4d94;}
+.sbtn:disabled{background:#ccc;cursor:not-allowed;}
+#s-success{background:white;align-items:center;justify-content:center;text-align:center;padding:36px 28px;}
+.scircle{width:110px;height:110px;border-radius:50%;background:#7B5EA7;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;animation:pop 0.4s ease;}
+@keyframes pop{0%{transform:scale(0)}80%{transform:scale(1.1)}100%{transform:scale(1)}}
+.stitle{font-size:21px;font-weight:800;color:#1a1a1a;margin-bottom:6px;}
+.ssub{font-size:13px;color:#666;line-height:1.6;margin-bottom:20px;}
+.mcwrap{background:#f9f6ff;border-radius:14px;padding:18px;margin-bottom:20px;width:100%;}
+.mcnum{font-size:52px;font-weight:900;color:#7B5EA7;line-height:1;}
+.mclab{font-size:12px;color:#888;margin-top:2px;}
+.aibtn{width:100%;padding:15px;border-radius:13px;border:none;background:#7B5EA7;color:white;font-size:15px;font-weight:800;cursor:pointer;margin-bottom:8px;transition:background 0.2s;}
+.aibtn:hover{background:#6a4d94;}
+.rbtn2{width:100%;padding:13px;border-radius:13px;border:1.5px solid #e0e0e0;background:white;color:#666;font-size:13px;font-weight:600;cursor:pointer;}
+#s-report{background:#f5f3ff;}
+.rhdr{background:#7B5EA7;padding:18px;color:white;display:flex;align-items:center;gap:10px;}
+.rbadge{background:rgba(255,255,255,0.2);border-radius:7px;padding:5px 9px;font-size:11px;font-weight:700;}
+.rtitle{font-size:17px;font-weight:800;}
+.rbody{padding:14px;flex:1;overflow-y:auto;}
+.scard{background:white;border-radius:18px;padding:22px;text-align:center;margin-bottom:12px;box-shadow:0 2px 10px rgba(123,94,167,0.08);}
+.snum{font-size:60px;font-weight:900;color:#7B5EA7;line-height:1;}
+.slab{font-size:13px;color:#888;margin-top:3px;}
+.sbarbg{background:#f0edf8;border-radius:100px;height:9px;margin-top:14px;}
+.sbarfill{background:#7B5EA7;border-radius:100px;height:9px;transition:width 1s ease;}
+.ecard{background:white;border-radius:14px;padding:14px 16px;margin-bottom:10px;box-shadow:0 2px 6px rgba(0,0,0,0.04);}
+.ectitle{font-size:12px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.etag{padding:2px 7px;border-radius:5px;font-size:11px;font-weight:700;}
+.tg{background:#e8f5e9;color:#2e7d32;}
+.tb{background:#fff3e0;color:#e65100;}
+.tc{background:#e8eaf6;color:#3949ab;}
+.etext{font-size:12px;color:#444;line-height:1.6;}
+.eitem{display:flex;align-items:flex-start;gap:7px;padding:9px;border-radius:9px;margin-bottom:5px;font-size:12px;line-height:1.5;}
+.eitem.g{background:#f1f8e9;color:#33691e;}
+.eitem.b{background:#fff8e1;color:#bf360c;}
+.edot{flex-shrink:0;margin-top:4px;width:5px;height:5px;border-radius:50%;}
+.g .edot{background:#66bb6a;}.b .edot{background:#ffa726;}
+.spinner{width:40px;height:40px;border:3px solid #e8e0f5;border-top-color:#7B5EA7;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bkbtn{background:none;border:none;color:rgba(255,255,255,0.8);font-size:14px;cursor:pointer;margin-left:auto;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="screen active" id="s-notify">
+  <div class="sbar"><span>9:02</span><span>🔋</span></div>
+  <div class="noti-hdr">오늘 · 오전 9:02</div>
+  <div class="kcard">
+    <div class="ktop">
+      <div class="kicon">🦸</div>
+      <div><div class="ksender">라이브히어로</div><div style="font-size:10px;color:#555;">Rookie 14 온보딩</div></div>
+      <div class="ktime">지금</div>
+    </div>
+    <div class="kbody">
+      <div class="ktitle">🌅 Day 7 체크리스트 도착! ✨</div>
+      <div class="ksub">오늘도 팬덤을 성장시켜 보세요.<br>미션을 확인하고 루틴을 이어가세요.</div>
+      <div class="kdiv"></div>
+      <div class="kcl">
+        <div class="cli"><div class="cico"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>라이브 20분 전 소품 세팅</div>
+        <div class="cli"><div class="cico"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>좋아요 20K 달성 목표 설정</div>
+        <div class="cli"><div class="cico"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>15분마다 신규 팔로워 환영 멘트</div>
+      </div>
+    </div>
+    <button class="kbtn" onclick="showBQ()">✅ 오늘의 미션 확인하기</button>
+  </div>
+  <div class="bq" id="bq" style="display:none;">
+    <div class="bqt">오늘 방송하셨나요? 📡</div>
+    <div class="bqs">방송 여부에 따라 오늘 미션을 기록해드려요</div>
+    <div class="bqbtns">
+      <button class="bqb y" onclick="go('s-mission');initMission()">✅ 네, 방송했어요</button>
+      <button class="bqb n" onclick="go('s-no')">😅 아직요</button>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="s-no">
+  <div style="background:#7B5EA7;padding:18px;color:white;display:flex;align-items:center;gap:10px;">
+    <button onclick="go('s-notify')" style="background:none;border:none;color:white;font-size:20px;cursor:pointer;">‹</button>
+    <span style="font-size:16px;font-weight:700;">오늘의 기록</span>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px;text-align:center;">
+    <div style="font-size:56px;margin-bottom:14px;">😴</div>
+    <div style="font-size:19px;font-weight:800;color:#1a1a1a;margin-bottom:7px;">괜찮아요, 내일 하면 돼요!</div>
+    <div style="font-size:13px;color:#666;line-height:1.7;margin-bottom:28px;">오늘 방송을 쉬셨군요.<br>내일 아침 다시 알려드릴게요.<br><br><span style="color:#7B5EA7;font-weight:600;">TIP: 예고 스토리를 올려두면<br>내일 시청자가 더 많이 모여요 📣</span></div>
+    <button onclick="go('s-notify')" style="width:100%;padding:13px;background:#7B5EA7;color:white;border:none;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;">확인</button>
+  </div>
+</div>
+
+<div class="screen" id="s-mission">
+  <div class="mhdr">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <div><div class="mday">Day 7 · 오늘의 미션</div><div class="mtitle">오늘의 미션 🎯</div></div>
+      <button class="bkbtn" onclick="go('s-notify')">← 뒤로</button>
+    </div>
+    <div class="pbwrap">
+      <div class="pblabel"><span id="ptxt">0/7 완료</span><span id="ppct">0%</span></div>
+      <div class="pbbg"><div class="pbfill" id="pfill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="mlist" id="mlist"></div>
+  <div class="msub"><button class="sbtn" id="sbtn" onclick="submitM()" disabled>미션 제출하기</button></div>
+</div>
+
+<div class="screen" id="s-success">
+  <div class="scircle">
+    <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><path d="M13 26l9.5 9.5L39 16" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <div class="stitle">미션 완료! 🎉</div>
+  <div class="ssub">오늘 미션을 성공적으로 완료했습니다.<br>수고하셨어요! 파이팅 💪</div>
+  <div class="mcwrap">
+    <div style="display:flex;align-items:baseline;justify-content:center;gap:5px;">
+      <div class="mcnum" id="dnum">0</div>
+      <div style="font-size:24px;font-weight:300;color:#ccc;">/7</div>
+    </div>
+    <div class="mclab">미션 완료</div>
+    <div style="margin-top:10px;background:#e8e0f5;border-radius:100px;height:5px;">
+      <div id="sprog" style="background:#7B5EA7;border-radius:100px;height:5px;transition:width 0.8s ease;width:0%;"></div>
+    </div>
+    <div style="font-size:11px;color:#888;margin-top:5px;" id="spct"></div>
+  </div>
+  <button class="aibtn" onclick="goReport()">✨ AI 종합 평가 보기</button>
+  <button class="rbtn2" onclick="go('s-mission')">← 미션 다시 보기</button>
+</div>
+
+<div class="screen" id="s-report">
+  <div class="rhdr">
+    <div class="rbadge">✨ AI 종합</div>
+    <div class="rtitle">오늘의 평가</div>
+    <button onclick="go('s-success')" style="background:none;border:none;color:rgba(255,255,255,0.7);font-size:22px;cursor:pointer;margin-left:auto;">×</button>
+  </div>
+  <div class="rbody" id="rbody">
+    <div style="text-align:center;padding:36px;"><div class="spinner"></div><div style="font-size:13px;color:#7B5EA7;font-weight:600;">AI가 평가를 생성하고 있어요...</div></div>
+  </div>
+</div>
+
+</div>
+<script>
+const MS=[
+  {id:1,name:"라이브 20분 전 소품 세팅",stars:"★★★★",tip:"최고의 모습을 보여줄 준비 완료!"},
+  {id:2,name:"라이브 스토리 공유",stars:"★★★",tip:"팔로워 노출을 극대화하세요!"},
+  {id:3,name:"좋아요 20K 달성",stars:"★★★",tip:"팬과 이어지는 강력한 관계를 만들어요"},
+  {id:4,name:"15분마다 매치",stars:"★★★",tip:"예측 가능한 패턴으로 편하게 즐겨요"},
+  {id:5,name:"매치 크리에이터 소통",stars:"★★",tip:"14일간 만난 사람들과 계속 협력해요"},
+  {id:6,name:"종료 전 개별 호명",stars:"★",tip:"특별한 마무리로 다음 방송 기대감을 높여요"},
+  {id:7,name:"종합 사후 관리",stars:"★",tip:"오픈 후 관리를 통해 더 큰 성장을 기록해요"},
+];
+let ck=new Set();
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function showBQ(){document.getElementById('bq').style.display='block';}
+function initMission(){renderM();}
+function renderM(){
+  const el=document.getElementById('mlist');
+  el.innerHTML=MS.map(m=>`<div class="mi ${ck.has(m.id)?'done':''}" onclick="tog(${m.id})"><div class="mitop"><div class="micb">${ck.has(m.id)?'<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6l3 3L10 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>':''}</div><div><div class="miname">${m.name}</div><div class="mistars">${m.stars}</div><div class="mitip">${m.tip}</div></div></div></div>`).join('');
+  const d=ck.size,t=MS.length,p=Math.round(d/t*100);
+  document.getElementById('ptxt').textContent=`${d}/${t} 완료`;
+  document.getElementById('ppct').textContent=`${p}%`;
+  document.getElementById('pfill').style.width=p+'%';
+  document.getElementById('sbtn').disabled=d===0;
+}
+function tog(id){ck.has(id)?ck.delete(id):ck.add(id);renderM();}
+function submitM(){
+  const d=ck.size,p=Math.round(d/7*100);
+  document.getElementById('dnum').textContent=d;
+  document.getElementById('sprog').style.width=p+'%';
+  document.getElementById('spct').textContent=`${p}% 달성`;
+  go('s-success');
+}
+async function goReport(){
+  go('s-report');
+  document.getElementById('rbody').innerHTML=`<div style="text-align:center;padding:36px;"><div class="spinner"></div><div style="font-size:13px;color:#7B5EA7;font-weight:600;">AI가 오늘의 방송을 분석하고 있어요...</div></div>`;
+  const dn=MS.filter(m=>ck.has(m.id)).map(m=>m.name);
+  const fn=MS.filter(m=>!ck.has(m.id)).map(m=>m.name);
+  const sc=Math.round(40+(ck.size/7)*55+Math.random()*5);
+  const prompt=`당신은 틱톡 라이브 호스트 전담 코치입니다. 신규 크리에이터의 오늘 방송을 평가해주세요.\n\n완료한 미션: ${dn.length?dn.join(', '):'없음'}\n미완료 미션: ${fn.length?fn.join(', '):'없음'}\n종합 점수: ${sc}점\n\n아래 JSON 형식으로만 응답하세요:\n{"score":${sc},"comment":"2-3문장의 전체 평가 의견 (따뜻하고 구체적으로 한국어로)","good":["잘한점1","잘한점2","잘한점3"],"improve":["개선할점1","개선할점2"]}`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    let txt=data.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim();
+    renderRep(JSON.parse(txt));
+  }catch(e){
+    renderRep({score:sc,comment:`오늘 ${ck.size}개 미션을 완료하셨어요! 꾸준한 루틴이 팬덤 성장의 핵심입니다. 내일도 함께 달려봐요 💜`,good:dn.length?dn.slice(0,3).map(n=>`"${n}" 미션을 성공적으로 완료하셨어요`):['오늘 방송에 함께해주셔서 감사해요'],improve:fn.length?fn.slice(0,2).map(n=>`"${n}" 미션을 내일은 꼭 도전해보세요`):['모든 미션을 완료하셨어요! 최고입니다']});
+  }
+}
+function renderRep(ev){
+  const g=ev.good.map(x=>`<div class="eitem g"><div class="edot"></div><span>${x}</span></div>`).join('');
+  const b=ev.improve.map(x=>`<div class="eitem b"><div class="edot"></div><span>${x}</span></div>`).join('');
+  document.getElementById('rbody').innerHTML=`<div class="scard"><div class="snum">${ev.score}</div><div class="slab">종합 점수</div><div class="sbarbg"><div class="sbarfill" id="sbar" style="width:0%"></div></div></div><div class="ecard"><div class="ectitle"><span class="etag tc">💬 평가 의견</span></div><div class="etext">${ev.comment}</div></div><div class="ecard"><div class="ectitle"><span class="etag tg">✓ 잘한 점</span><span style="margin-left:auto;font-size:11px;color:#aaa;">${ev.good.length}개</span></div>${g}</div><div class="ecard"><div class="ectitle"><span class="etag tb">△ 개선할 점</span><span style="margin-left:auto;font-size:11px;color:#aaa;">${ev.improve.length}개</span></div>${b}</div><div style="height:16px;"></div>`;
+  setTimeout(()=>{const bar=document.getElementById('sbar');if(bar)bar.style.width=ev.score+'%';},100);
+}
+document.getElementById('bq').style.display='none';
+renderM();
+</script>
+</body>
+</html>
